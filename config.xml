@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    <widget id="pro.hita.registroLugares" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+        <name>Registro de lugares</name>
+        <description>Ejemplo del libro: un sistema sencillo que registra lugares físicos con su posición GPS</description>
+        <author email="ignaciohita@gmail.com" href="http://www.hita.pro">Jose Ignacio Hita Barraza</author>
+        <content src="index.html" />
+        <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
+
+        <icon src="www/img/icon/icon144x144.png" />
+
+        <platform name="android">
+            <allow-intent href="market:*" />
+
+            <icon density="ldpi" src="www/img/icon/icon36x36.png" />
+            <icon density="mdpi" src="www/img/icon/icon48x48.png" />
+            <icon density="hdpi" src="www/img/icon/icon72x72.png" />
+            <icon density="xhdpi" src="www/img/icon/icon96x96.png" />
+        </platform>
+
+        <platform name="ios">
+            <allow-intent href="itms:*" />
+            <allow-intent href="itms-apps:*" />
+
+            <icon height="57" src="www/img/icon/icon57x57.png" width="57" />
+            <icon height="72" src="www/img/icon/icon72x72.png" width="72" />
+            <icon height="114" src="www/img/icon/icon57x57.png" width="114" />
+            <icon height="144" src="www/img/icon/icon72x72.png" width="144" />
+        </platform>
+    </widget>
