@@ -3,6 +3,12 @@ var pluginListo = false,
     ultimaPosicion,
     referenciaNavegador;
 
+function seleccionarTipoNavegador() {
+    "use strict";
+
+    localStorage.setItem("preferenciaNavegadorExterno", (document.getElementById("checkNavegador").checked ? "true" : "false"));
+}
+
 function nuevaPosicionLista() {
     "use strict";
 
@@ -11,13 +17,17 @@ function nuevaPosicionLista() {
     referenciaNavegador = cordova.InAppBrowser.open("https://maps.google.com/?q=" + ultimaPosicion.coords.latitude + "," + ultimaPosicion.coords.longitude, "_blank", "hidden=yes");
     referenciaNavegador.addEventListener("loadstop", function () {
         document.getElementById("botonMostrarPosicion").style.display = "block";
+        document.getElementById("labelCheckNavegador").style.display = "block";
     });
 }
 
 function mostrarPosicion() {
     "use strict";
-
-    referenciaNavegador.show();
+    if (document.getElementById("checkNavegador").checked) {
+        cordova.InAppBrowser.open("https://maps.google.com/?q=" + ultimaPosicion.coords.latitude + "," + ultimaPosicion.coords.longitude, "_system");
+    } else {
+        referenciaNavegador.show();
+    }
 }
 
 function obtenerPosicion() {
@@ -32,6 +42,7 @@ function obtenerPosicion() {
         }, function (error) {
             document.getElementById("posicionDispositivo").innerHTML = "Error obteniendo posici&oacute;n:<br>" + error.code + " - " + error.message;
             document.getElementById("botonMostrarPosicion").style.display = "none";
+            document.getElementById("labelCheckNavegador").style.display = "none";
         }, {
             maximumAge: 3000,
             timeout: 10000,
@@ -44,6 +55,7 @@ function dispositivoListo() {
     "use strict";
 
     pluginListo = true;
+    document.getElementById("checkNavegador").checked = localStorage.getItem("preferenciaNavegadorExterno") === "true";
 }
 
 function inicioAplicacion() {
