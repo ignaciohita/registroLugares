@@ -12,10 +12,13 @@
     <h1>Bienvenido al Registro de Lugares</h1>
     <button id="botonObtenerPosicion" onclick="obtenerPosicion()">Obtener posici&oacute;n</button>
     <h4 id="posicionDispositivo"></h4>
+    <button id="botonGuardarPosicion" onclick="agregarPosicionBaseDatos()" style="display: none">Guardar posici&oacute;n</button>
     <button id="botonMostrarPosicion" onclick="mostrarPosicion()" style="display: none">Mostrar posici&oacute;n</button>
     <label id="labelCheckNavegador" style="display: none">
         <input id="checkNavegador" type="checkbox" onchange="seleccionarTipoNavegador()">Abrir en aplicaci&oacute;n externa</input>
     </label>
+    <h4 id="tituloPosicionesGuardadas">Posiciones guardadas:</h4>
+    <ul id="listaPosicionesGuardadas"></ul>
 </body>
 
 </html>
