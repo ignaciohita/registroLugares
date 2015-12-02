@@ -54,13 +54,38 @@ function obtenerPosicion() {
     }
 }
 
+function mostrarPosicionGuardada(evento) {
+    "use strict";
+
+    var transaccion = baseDatos.transaction(["lugares"], "readwrite"),
+        store = transaccion.objectStore("lugares"),
+        operacion = store.get(evento.srcElement.clave);
+
+    operacion.addEventListener("onsuccess", function (e) {
+        if (document.getElementById("checkNavegador").checked) {
+            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.longitude, "_system");
+        } else {
+            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.longitude, "_blank");
+        }
+    });
+}
+
 function visualizarUltimaPosicionAgregada() {
     "use strict";
 
-    var nodoNumero = document.createElement("li"),
+    var nodoPosicion = document.createElement("li"),
+        enlacePosicion = document.createElement("a"),
         fechaPosicion = new Date(ultimaPosicion.timestamp);
-    nodoNumero.appendChild(document.createTextNode(fechaPosicion.getDate() + "/" + (fechaPosicion.getMonth() + 1) + "/" + fechaPosicion.getFullYear() + " - " + fechaPosicion.getHours() + ":" + fechaPosicion.getMinutes() + ":" + fechaPosicion.getSeconds()));
-    document.getElementById("listaPosicionesGuardadas").appendChild(nodoNumero);
+
+    enlacePosicion.onclick = mostrarPosicionGuardada;
+
+    enlacePosicion.clave = ultimaPosicion.clave;
+    enlacePosicion.title = ultimaPosicion.clave + "- " + fechaPosicion.getDate() + "/" + (fechaPosicion.getMonth() + 1) + "/" + fechaPosicion.getFullYear() + " - " + fechaPosicion.getHours() + ":" + fechaPosicion.getMinutes() + ":" + fechaPosicion.getSeconds();
+    enlacePosicion.href = "#";
+    enlacePosicion.appendChild(document.createTextNode(enlacePosicion.title));
+
+    nodoPosicion.appendChild(enlacePosicion);
+    document.getElementById("listaPosicionesGuardadas").appendChild(nodoPosicion);
 }
 
 function recuperarPosicionesBaseDatos() {
@@ -76,6 +101,7 @@ function recuperarPosicionesBaseDatos() {
         if (posicion) {
             document.getElementById("tituloPosicionesGuardadas").style.display = "block";
             ultimaPosicion = event.target.result.value;
+            ultimaPosicion.clave = event.target.result.key;
             visualizarUltimaPosicionAgregada();
         }
 
@@ -93,7 +119,7 @@ function abrirBaseDatos() {
 
         baseDatos = event.target.result;
 
-        if (!baseDatos.objectStoreNames.contains("firstOS")) {
+        if (!baseDatos.objectStoreNames.contains("lugares")) {
             baseDatos.createObjectStore("lugares", {
                 autoIncrement: true
             });
@@ -126,11 +152,12 @@ function agregarPosicionBaseDatos() {
             }
         });
 
-    operacion.onsuccess = function (e) {
+    operacion.onsuccess = function (event) {
+        ultimaPosicion.clave = event.target.result;
         visualizarUltimaPosicionAgregada();
     };
 
-    operacion.onerror = function (e) {
+    operacion.onerror = function (event) {
         document.getElementById("botonGuardarPosicion").style.display = "block";
     };
 }

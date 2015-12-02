@@ -1,5 +1,5 @@
 {
-    "name": "sorteoLoteria",
+    "name": "registroLugares",
     "version": "1.0.0",
     "description": "Ejemplo del libro: un sistema sencillo que registra lugares físicos con su posición GPS",
     "author": "Jose Ignacio Hita Barraza <ignaciohita@gmail.com>",
@@ -7,8 +7,8 @@
         {
             "name": "Jose Ignacio Hita Barraza",
             "email": "ignaciohita@gmail.com"
-    }
-  ],
+        }
+    ],
     "scripts": {
         "test": "cordova serve",
         "predeploy": "cordova prepare"
@@ -22,10 +22,10 @@
         "url": "https://github.com/ignaciohita/registroLugares/issues"
     },
     "keywords": [
-    "cordova",
-    "example",
-    "teaching"
-  ],
+        "cordova",
+        "example",
+        "teaching"
+    ],
     "dependencies": {},
     "preferGlobal": true,
     "private": false,
