@@ -61,13 +61,13 @@ function mostrarPosicionGuardada(evento) {
         store = transaccion.objectStore("lugares"),
         operacion = store.get(evento.srcElement.clave);
 
-    operacion.addEventListener("onsuccess", function (e) {
+    operacion.onsuccess = function () {
         if (document.getElementById("checkNavegador").checked) {
-            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.longitude, "_system");
+            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.coords.longitude, "_system");
         } else {
-            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.longitude, "_blank");
+            cordova.InAppBrowser.open("https://maps.google.com/?q=" + operacion.result.coords.latitude + "," + operacion.result.coords.longitude, "_blank");
         }
-    });
+    };
 }
 
 function visualizarUltimaPosicionAgregada() {
@@ -103,9 +103,8 @@ function recuperarPosicionesBaseDatos() {
             ultimaPosicion = event.target.result.value;
             ultimaPosicion.clave = event.target.result.key;
             visualizarUltimaPosicionAgregada();
+            posicion.continue();
         }
-
-        posicion.continue();
     };
 }
 
